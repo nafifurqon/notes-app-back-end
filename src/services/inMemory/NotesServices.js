@@ -1,3 +1,4 @@
+const {nanoid} = require('nanoid');
 class NotesService {
   constructor() {
     this._notes = [];
@@ -36,7 +37,7 @@ class NotesService {
   }
 
   editNoteById(id, {title, body, tags}) {
-    const index = notes.findIndex((note) => note.id === id);
+    const index = this._notes.findIndex((note) => note.id === id);
 
     if (index === -1) {
       throw new Error('Gagal memperbarui catatan. Id tidak ditemukan');
