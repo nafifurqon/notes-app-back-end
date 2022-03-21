@@ -76,4 +76,4 @@ class NotesService {
   }
 }
 
-module.exports = {NotesService};
+module.exports = NotesService;
