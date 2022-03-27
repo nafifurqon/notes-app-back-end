@@ -8,6 +8,7 @@ const AuthorizationError = require('../../exceptions/AuthorizationError');
 class NotesService {
   constructor() {
     this._pool = new Pool();
+    this._collaborationService = collaborationService;
   }
 
   async addNote({title, body, tags, owner}) {
@@ -96,6 +97,21 @@ class NotesService {
 
     if (note.owner !== owner) {
       throw new AuthorizationError('Anda tidak berhak mengakses resource ini');
+    }
+  }
+
+  async verifyNoteAccess(noteId, userId) {
+    try {
+      await this.verifyNoteOwner(noteId, userId);
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        throw error;
+      }
+      try {
+        await this._collaborationService.verifyCollaborator(noteId, userId);
+      } catch {
+        throw error;
+      }
     }
   }
 }
