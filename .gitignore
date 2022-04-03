@@ -4,3 +4,4 @@ notes-api-webserver-2.pem
 .env
 .prod.env
 .dev.env
+src/api/uploads/file
